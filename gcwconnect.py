@@ -92,7 +92,7 @@ font_small  = pygame.font.Font(font_path, 10)
 font_medium = pygame.font.Font(font_path, 12)
 font_large  = pygame.font.Font(font_path, 16)
 font_huge   = pygame.font.Font(font_path, 48)
-gcw_font        = pygame.font.Font(os.path.join(datadir, 'gcwzero.ttf'), 25)
+gcw_font        = pygame.font.Font(os.path.join(datadir, 'gcwzero.ttf'), 23)
 font_mono_small = pygame.font.Font(os.path.join(datadir, 'Inconsolata.otf'), 11)
 
 ## File management
@@ -323,15 +323,15 @@ class hint:
 			labeltext = font_tiny.render(self.text, True, colors["white"], self.bg)
 			surface.blit(labeltext, labelblock)
 
-		elif self.button in ('a', 'b', 'x', 'y'):
+		elif self.button in ('a', 'b', 'y', 'x'):
 			if self.button == "a":
-				color = colors["green"]
-			elif self.button == "b":
-				color = colors["blue"]
-			elif self.button == "x":
 				color = colors["red"]
-			elif self.button == "y":
+			elif self.button == "b":
 				color = colors["yellow"]
+			elif self.button == "y":
+				color = colors["green"]
+			elif self.button == "x":
+				color = colors["blue"]
 
 			labelblock = pygame.draw.rect(surface, self.bg, (self.x+10,self.y,35,14))
 			labeltext = font_tiny.render(self.text, True, colors["white"], self.bg)
@@ -370,7 +370,7 @@ class LogoBar(object):
 	'''The logo area at the top of the screen.'''
 
 	def __init__(self):
-		self.text1 = gcw_font.render('GCW', True, colors['logogcw'], colors['lightbg'])
+		self.text1 = gcw_font.render('ROGUE', True, colors['logogcw'], colors['lightbg'])
 		self.text2 = gcw_font.render('CONNECT', True, colors['logoconnect'], colors['lightbg'])
 
 	def draw(self):
@@ -759,13 +759,13 @@ def drawkeyboard(board):
 
 	hint("select", "Cancel", 4, 227, colors['lightbg'])
 	hint("start", "Finish", 75, 227, colors['lightbg'])
-	hint("x", "Delete", 155, 227, colors['lightbg'])
+	hint("y", "Delete", 155, 227, colors['lightbg'])
 	if not board == "wep":
-		hint("y", "Shift", 200, 227, colors['lightbg'])
+		hint("x", "Shift", 200, 227, colors['lightbg'])
 		hint("b", "Space", 240, 227, colors['lightbg'])
 
 	else:
-		hint("y", "Full KB", 200, 227, colors['lightbg'])
+		hint("x", "Full KB", 200, 227, colors['lightbg'])
 
 	hint("a", "Enter", 285, 227, colors['lightbg'])
 
@@ -815,11 +815,11 @@ def softkeyinput(keyboard, kind, ssid):
 			if event.key == K_LALT:		# B button
 				if encryption != "WEP-40":
 					selectkey(keyboard, kind, "space")
-			if event.key == K_SPACE:	# Y button (swap keyboards)
+			if event.key == K_SPACE:	# X button (swap keyboards)
 				keyboard = nextKeyboard(keyboard)
 				drawkeyboard(keyboard)
 				selectkey(keyboard, kind, "swap")
-			if event.key == K_LSHIFT:	# X button
+			if event.key == K_LSHIFT:	# Y button
 				selectkey(keyboard, kind, "delete")
 			if event.key == K_ESCAPE:	# Select key
 				passphrase = ''
@@ -1376,8 +1376,8 @@ if __name__ == "__main__":
 			## GCW-Zero keycodes:
 			# A = K_LCTRL
 			# B = K_LALT
-			# X = K_LSHIFT
-			# Y = K_SPACE
+			# X = K_SPACE
+			# Y = K_LSHIFT
 			# L = K_TAB
 			# R = K_BACKSPACE
 			# start = K_RETURN
@@ -1421,7 +1421,7 @@ if __name__ == "__main__":
 					elif event.key == K_LALT:
 						pygame.display.quit()
 						sys.exit()
-				elif event.key == K_SPACE:
+				elif event.key == K_LSHIFT:
 					if active_menu == "saved":
 						confirm = modal("Forget AP configuration?", query=True)
 						if confirm:
