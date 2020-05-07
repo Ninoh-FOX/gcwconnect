@@ -47,7 +47,7 @@ datadir = "/usr/share/gcwconnect/"
 if not os.path.exists(datadir):
 	datadir = "data/"
 
-surface = pygame.display.set_mode((320,240))
+surface = pygame.display.set_mode((320,240),0,16)
 selected_key = ''
 passphrase = ''
 active_menu = ''
